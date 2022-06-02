@@ -15,6 +15,11 @@ export const ChatPage = () => {
         <InboxPeople/>
 
         <Messages/>
+        {
+          /**
+           * <SelectMessage/>
+           */
+        }
 
     </div>
 
