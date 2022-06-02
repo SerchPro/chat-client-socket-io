@@ -7,24 +7,22 @@ import '../css/chat.css'
 export const ChatPage = () => {
   return (
 
-<body>
 
-<div className="messaging">
-    <div className="inbox_msg">
+  <div className="messaging">
+      <div className="inbox_msg">
 
-        <InboxPeople/>
+          <InboxPeople/>
 
-        <Messages/>
-        {
-          /**
-           * <SelectMessage/>
-           */
-        }
+          <Messages/>
+          {
+            /**
+             * <SelectMessage/>
+             */
+          }
 
-    </div>
+      </div>
 
 
-</div>
-</body>
+  </div>
   )
 }
