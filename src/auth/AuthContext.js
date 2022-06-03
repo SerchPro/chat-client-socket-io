@@ -1,11 +1,7 @@
 import React, { Children, createContext, useCallback, useState } from "react";
 import { fetchNotoken, fetchtoken } from "../helpers/fetch";
 
-
-
-
 export const AuthContext = createContext();
-
 
 const initialState ={
     uid: null,
@@ -14,9 +10,6 @@ const initialState ={
     name: null,
     email: null
 }
-
-
-
 
 export const AuthProvider = ({children}) => {
 
@@ -103,6 +96,11 @@ export const AuthProvider = ({children}) => {
       },[] )
 
     const logout = () =>{
+        localStorage.removeItem('token');
+        setAuth({
+            checking: false,
+            logged: false,
+        })
 
     }
     
