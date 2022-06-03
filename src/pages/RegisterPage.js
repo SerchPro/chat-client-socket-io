@@ -1,7 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export const RegisterPage = () => {
+
+  const [ form, setForm ] = useState({
+    email: "nuevo@gmail.com",
+    password: "123456",
+    name: "ser"
+  });
+
+  const onchange = ({target}) => {
+    const { name, value} = target;
+    setForm({
+      ...form,
+      [name]: value
+    })
+  }
+
   return (
       <form className="login100-form validate-form flex-sb flex-w">
         <span className="login100-form-title mb-3">
@@ -9,19 +24,40 @@ export const RegisterPage = () => {
         </span>
 
         <div className="wrap-input100 validate-input mb-3">
-          <input className="input100" type="text" name="name" placeholder="Nombre" />
+          <input 
+            className="input100" 
+            type="text" 
+            name="name" 
+            placeholder="Name" 
+            value = { form.name }
+            onChange = { onchange }
+            />
           <span className="focus-input100"></span>
         </div>
 
         
         <div className="wrap-input100 validate-input mb-3">
-          <input className="input100" type="email" name="email" placeholder="Email" />
+          <input 
+            className="input100" 
+            type="email" 
+            name="email" 
+            placeholder="Email"
+            value = { form.email }
+            onChange = { onchange }
+            />
           <span className="focus-input100"></span>
         </div>
         
         
         <div className="wrap-input100 validate-input mb-3">
-          <input className="input100" type="password" name="password" placeholder="Password" />
+          <input 
+            className="input100" 
+            type="password" 
+            name="password" 
+            placeholder="Password"
+            value = { form.password }
+            onChange = { onchange }
+            />
           <span className="focus-input100"></span>
         </div>
         
