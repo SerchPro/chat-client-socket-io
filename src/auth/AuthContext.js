@@ -1,5 +1,5 @@
 import React, { Children, createContext, useCallback, useState } from "react";
-import { fetchNotoken } from "../helpers/fetch";
+import { fetchNotoken, fetchtoken } from "../helpers/fetch";
 
 
 
@@ -60,8 +60,45 @@ export const AuthProvider = ({children}) => {
         return resp
     }
 
-    const verificaToken = useCallback(
-      () => {
+    const verifyToken = useCallback( async() => {
+
+        const token = localStorage.getItem('token');
+
+        if(!token){
+            setAuth({
+                uid: null,
+                checking: true,
+                logged: false,
+                name: null,
+                email: null
+            });
+            return false;
+        }
+
+        const resp = await fetchtoken('login/renew');
+        if (resp.ok){
+            localStorage.setItem('token', resp.token);
+            const {email, name, online, uid } = resp.user
+
+            setAuth({
+                uid,
+                checking: false,
+                logged: true,
+                name,
+                email,
+            });
+            console.log("autenticado");
+            return true;
+        }else{
+            setAuth({
+                uid: null,
+                checking: false,
+                logged: false,
+                name: null,
+                email: null,
+            });
+            return false;
+        }
         
       },[] )
 
@@ -76,7 +113,7 @@ export const AuthProvider = ({children}) => {
             auth,
             login,
             register,
-            verificaToken,
+            verifyToken,
             logout,
         }}>
             { children }
