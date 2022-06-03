@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../auth/AuthContext';
+import Swalt from 'sweetalert2';
 
 export const RegisterPage = () => {
+
+  const { register } = useContext( AuthContext)
 
   const [ form, setForm ] = useState({
     email: "nuevo@gmail.com",
@@ -17,12 +21,27 @@ export const RegisterPage = () => {
     })
   }
 
+  const onSubmit = async(e) => {
+      e.preventDefault();
+      const { email, password, name } = form;
+      const resp = await register(name, email, password);
+      console.log(resp)
+
+      if(!resp.ok){
+        Swalt.fire('Error', resp.msg, 'error')
+      }
+
+  }
+
   const isOk = () =>{
     return !( form.email.length > 0 && form.password.length > 0  && form.name.length > 0) ? true : false;
   }
 
   return (
-      <form className="login100-form validate-form flex-sb flex-w">
+      <form 
+          className="login100-form validate-form flex-sb flex-w"
+          onSubmit={ onSubmit }
+          >
         <span className="login100-form-title mb-3">
           Chat - Registro
         </span>
