@@ -27,7 +27,7 @@ export const AuthProvider = ({children}) => {
         console.log(resp)
         if(resp.ok){
             localStorage.setItem('token', resp.token);
-            const {email, name, online, uid } = resp.userdb
+            const {email, name, online, uid } = resp.user
 
             setAuth({
                 uid,
@@ -41,8 +41,23 @@ export const AuthProvider = ({children}) => {
         return resp
     }
 
-    const register = (nombre, email, password) =>{
+    const register = async(name, email, password) =>{
+        const resp = await fetchNotoken('login/new', {email, password, name}, 'POST');
+        console.log(resp)
+        if(resp.ok){
+            localStorage.setItem('token', resp.token);
+            const {email, name, online, uid } = resp.userdb
 
+            setAuth({
+                uid,
+                checking: false,
+                logged: true,
+                name,
+                email,
+            })
+        }
+
+        return resp
     }
 
     const verificaToken = useCallback(
