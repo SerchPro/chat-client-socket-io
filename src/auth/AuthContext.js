@@ -1,11 +1,11 @@
-import React, { Children, createContext, useCallback, useState } from "react";
+import React, {createContext, useCallback, useState } from "react";
 import { fetchNotoken, fetchtoken } from "../helpers/fetch";
 
 export const AuthContext = createContext();
 
 const initialState ={
     uid: null,
-    checking: true,
+    checking: false,
     logged: false,
     name: null,
     email: null
@@ -20,7 +20,7 @@ export const AuthProvider = ({children}) => {
         console.log(resp)
         if(resp.ok){
             localStorage.setItem('token', resp.token);
-            const {email, name, online, uid } = resp.user
+            const {email, name, uid } = resp.userdb
 
             setAuth({
                 uid,
@@ -39,7 +39,7 @@ export const AuthProvider = ({children}) => {
         console.log(resp)
         if(resp.ok){
             localStorage.setItem('token', resp.token);
-            const {email, name, online, uid } = resp.userdb
+            const {email, name, uid } = resp.userdb
 
             setAuth({
                 uid,
@@ -55,12 +55,14 @@ export const AuthProvider = ({children}) => {
 
     const verifyToken = useCallback( async() => {
 
+        console.log("verifying")
+
         const token = localStorage.getItem('token');
 
         if(!token){
             setAuth({
                 uid: null,
-                checking: true,
+                checking: false,
                 logged: false,
                 name: null,
                 email: null
@@ -71,7 +73,7 @@ export const AuthProvider = ({children}) => {
         const resp = await fetchtoken('login/renew');
         if (resp.ok){
             localStorage.setItem('token', resp.token);
-            const {email, name, online, uid } = resp.user
+            const {email, name, uid } = resp.user
 
             setAuth({
                 uid,

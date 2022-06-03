@@ -22,8 +22,7 @@ export const LoginPage = () => {
         rememberme: true
       }))
     }
-    console.log("form actualizado")
-  }, [])
+  }, [form])
   
 
 
