@@ -24,7 +24,6 @@ export const fetchNotoken = async (endpoint, data, method = 'GET') =>{
 
 
 export const fetchtoken = async (endpoint, data, method = 'GET') =>{
-    console.log(endpoint, data, method)
     const url = `${ baseUrl }/${ endpoint }`;
 
     if(method === 'GET'){
