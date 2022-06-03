@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../auth/AuthContext';
+import Swalt from 'sweetalert2';
 
 export const LoginPage = () => {
 
@@ -45,11 +46,16 @@ export const LoginPage = () => {
     ev.preventDefault();
     (form.rememberme)
       ? localStorage.setItem('email', form.email)
-      : localStorage.removeItem('email')
+      : localStorage.removeItem('email');
+
     const { email, password} = form;
-    console.log(email, password);
-    const ok = await login(email, password);
-    console.log(ok);
+
+    const resp = await login(email, password);
+
+    if(!resp.ok){
+      Swalt.fire('Error', resp.msg, 'error')
+    }
+    console.log(resp);
   }
 
 

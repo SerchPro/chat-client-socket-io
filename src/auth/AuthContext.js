@@ -38,7 +38,7 @@ export const AuthProvider = ({children}) => {
             })
         }
 
-        return resp.ok
+        return resp
     }
 
     const register = (nombre, email, password) =>{
