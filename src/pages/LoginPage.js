@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../auth/AuthContext';
 
 export const LoginPage = () => {
+
+  const { login } = useContext( AuthContext)
 
   const [form , setForm ] = useState({
     email: 'sergio@fondeadora.mx',
@@ -12,12 +15,13 @@ export const LoginPage = () => {
   useEffect(() => {
     const email = localStorage.getItem('email');
     if ( email ){
-      setForm({
+      setForm( (form) ({
         ...form,
         email,
         rememberme: true
-      })
+      }))
     }
+    console.log("form actualizado")
   }, [])
   
 
@@ -37,11 +41,15 @@ export const LoginPage = () => {
     })
   }
 
-  const onSubmit = (ev) => {
+  const onSubmit = async (ev) => {
     ev.preventDefault();
     (form.rememberme)
       ? localStorage.setItem('email', form.email)
       : localStorage.removeItem('email')
+    const { email, password} = form;
+    console.log(email, password);
+    const ok = await login(email, password);
+    console.log(ok);
   }
 
 
