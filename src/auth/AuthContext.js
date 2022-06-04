@@ -55,8 +55,6 @@ export const AuthProvider = ({children}) => {
 
     const verifyToken = useCallback( async() => {
 
-        console.log("verifying")
-
         const token = localStorage.getItem('token');
 
         if(!token){
@@ -82,7 +80,6 @@ export const AuthProvider = ({children}) => {
                 name,
                 email,
             });
-            console.log("autenticado");
             return true;
         }else{
             setAuth({
