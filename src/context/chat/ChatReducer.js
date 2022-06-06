@@ -6,9 +6,9 @@ export const ChatReducer = ( state, action ) => {
         case types.uploadedUsers:
             return {
                 ...state,
-                users: [action.payload]
+                users: [ ...action.payload ]
             }
         default:
-            state;
+            {};
     }
 }
