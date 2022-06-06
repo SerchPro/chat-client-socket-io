@@ -2,5 +2,6 @@
 
 export const types = {
 
-    uploadedUsers: '[Chat] uploaded users'
+    uploadedUsers: '[Chat] uploaded users',
+    chatActive: '[Chat] activate chat'
 }
