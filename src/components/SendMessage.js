@@ -1,8 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { SocketContext } from '../context/SocketContext';
+import { AuthContext } from '../auth/AuthContext';
+import { ChatContext } from '../context/chat/ChatContext';
+
 
 export const SendMessage = () => {
 
     const [message, setMessage] = useState('');
+    const { socket } = useContext( SocketContext );
+    const { auth } = useContext( AuthContext );
+    const { chatState } = useContext( ChatContext )
 
     const onChange = ({ target }) => {
         setMessage( target.value );
@@ -13,6 +20,11 @@ export const SendMessage = () => {
 
         if( message.length === 0 ){ return;}
         setMessage('')
+        socket.emit( 'personal-message', {
+            from: auth.uid,
+            to: chatState.activeChat,
+            message
+        });
     }
     return (
         <form onSubmit={ onSubmit }>
