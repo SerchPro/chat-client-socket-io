@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const chatSelect = () => {
+export const ChatSelect = () => {
   return (
     <div className='middle-screen'>
         <div className='alert-info'>
