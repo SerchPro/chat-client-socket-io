@@ -12,7 +12,7 @@ export const Messages = () => {
 
   return (
             <div
-                id="mensajes"
+                id="messages"
                 className="mesgs">
 
                 <div className="msg_history">
