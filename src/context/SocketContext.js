@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { createContext } from 'react';
 import { AuthContext } from '../auth/AuthContext';
+import { scrollToBottom } from '../helpers/scrollToBottom';
 import { useSocket } from '../hooks/useSocket'
 import { types } from '../types/types';
 import { ChatContext } from './chat/ChatContext';
@@ -47,7 +48,9 @@ export const SocketProvider = ({ children }) => {
         dispatch({
           type: types.newMessage,
           payload: message
-        })
+        });
+
+        scrollToBottom('messages')
       })
     }, [socket, dispatch])
     
