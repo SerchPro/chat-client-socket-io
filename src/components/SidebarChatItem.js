@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { ChatContext } from '../context/chat/ChatContext'
+import { fetchtoken } from '../helpers/fetch';
 import { types } from '../types/types';
 
 export const SidebarChatItem = ({ user }) => {
@@ -7,10 +8,17 @@ export const SidebarChatItem = ({ user }) => {
   const { chatState, dispatch } = useContext( ChatContext );
   const { activeChat } = chatState;
 
-  const onClick = () =>{
+  const onClick = async() =>{
     dispatch({
       type: types.chatActive,
       payload: user.uid
+    });
+
+    const resp = await fetchtoken(`message/${ user.uid }`);
+    console.log( resp.last30 );
+    dispatch({
+      type: types.loadMessages,
+      payload: resp.last30
     })
   }
 
