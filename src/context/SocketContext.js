@@ -1,8 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import { createContext } from 'react';
+
 import { AuthContext } from '../auth/AuthContext';
-import { scrollToBottom } from '../helpers/scrollToBottom';
+import { scrollToBottomAnimated } from '../helpers/scrollToBottom';
 import { useSocket } from '../hooks/useSocket'
+
+
 import { types } from '../types/types';
 import { ChatContext } from './chat/ChatContext';
 
@@ -19,40 +22,38 @@ export const SocketProvider = ({ children }) => {
       if( auth.logged ){
         connectSocket();
       }
-    }, [auth, connectSocket])
+    }, [auth.logged])
 
 
     useEffect(() => {
         if( !auth.logged ){
             disconnectSocket();
         }
-      }, [auth, disconnectSocket])
+      }, [auth.logged])
     
   
     useEffect(() => {
 
       socket?.on( 'users-list', (users) => {
-        console.log(users);
         dispatch({
             type: types.uploadedUsers,
             payload: users
         })
       });
 
-    }, [ socket , dispatch]);
+    }, [ socket]);
 
 
     useEffect(() => {
       socket?.on('personal-message', (message) => {
-        console.log("mensaje del socket", message);
         dispatch({
           type: types.newMessage,
           payload: message
         });
 
-        scrollToBottom('messages')
+        scrollToBottomAnimated('messages')
       })
-    }, [socket, dispatch])
+    }, [socket])
     
 
     return (
