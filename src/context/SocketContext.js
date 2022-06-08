@@ -43,9 +43,13 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
       socket?.on('personal-message', (message) => {
-        console.log(message)
+        console.log("mensaje del socket", message);
+        dispatch({
+          type: types.newMessage,
+          payload: message
+        })
       })
-    }, [socket])
+    }, [socket, dispatch])
     
 
     return (
